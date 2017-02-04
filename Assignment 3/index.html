@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/teyozi/9/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<title>Seeger Assignment 3</title>
+<style id="jsbin-css">
+h1 {
+  color:purple
+}
+h5 {
+  color:brown
+}
+</style>
+</head>
+
+<style>
+  H3 {color:red;
+      padding:0;
+      margin:0;
+  }
+  H5 {color:red;
+      padding:0;
+      margin:0;
+  }
+  
+</style>
+  
+<body>
+  <h3>Assignment 3</h3>
+  <h5>Jennifer (Stant) Clarke</h5>
+  
+<br>
+  <a href="#" onclick="changeMap('basemapLandcover')">Basemap</a> &nbsp;&nbsp;&nbsp;
+  <a href="#" onclick="changeMap('bedBreakfast')">Bed and Breakfasts</a> &nbsp;&nbsp;&nbsp;
+  <a href="#" onclick="changeMap('Zipcode')">Zipcode</a> &nbsp;&nbsp;&nbsp;
+  <a href="#" onclick="changeMap('appleOrchards')">Apple Orchards</a> &nbsp;&nbsp;&nbsp;
+  <a href="#" onclick="changeMap('canoeRoutes')">Canoe Routes</a> &nbsp;&nbsp;&nbsp;
+
+  </br>
+  <img id="myMap" src="images/basemapLandcover.png" alt="basemapLandcover" width="600" height="400">
+  <script>
+   function changeMap(x) {
+     document.getElementByID("myMap").src = "images/"+ x + ".png";
+   }
+  </script>
+  </body>
+</html>
+
+  
+    
+  
+  
+  
+  
