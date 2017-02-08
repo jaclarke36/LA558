@@ -1,0 +1,53 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/wicugey/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<style id="jsbin-css">
+h1 {
+  color:purple
+}
+h5 {
+  color:brown
+}
+</style>
+<meta name="description" content="Assignment 4 Input Field">
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Assignment 4 Input Field</h2>
+
+<p>Please input your favorite number between 1 and 38, and I will place a bet on this number in Vegas:</p>
+
+<input id="numb">
+
+<button type="button" onclick="myFunction()">Submit</button>
+
+<p id="demo"></p>
+
+
+<script id="jsbin-javascript">
+function myFunction() {
+    var x, text;
+
+    // Get the value of the input field with id="numb"
+    x = document.getElementById("numb").value;
+
+    // If x is Not a Number or less than one or greater than 38
+    if (isNaN(x) || x < 1 || x > 38) {
+        text = "Sorry, that number does not exist on a roulette wheel!";
+    } else {
+        text = "It's a Winner!";
+    }
+    document.getElementById("demo").innerHTML = text;
+}
+
+</script>
+</body>
+</html> 

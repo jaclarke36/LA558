@@ -1,0 +1,48 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/lucixam/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<style id="jsbin-css">
+h1 {
+  color:purple
+}
+h5 {
+  color:brown
+}
+</style>
+<meta name="description" content="Assignment 4 If / Else">
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Assignment 4 If / Else Condition</h2>
+
+<p>Click the button to determine if it's time for Mason to go to bed.</p>
+
+<button onclick="myFunction()">Is it time for Mason to go to bed?</button>
+
+<p id="bedTime"></p>
+
+
+<script id="jsbin-javascript">
+
+function myFunction() {
+    var hour = new Date().getHours(); 
+    var greeting;
+    if (hour < 20) {
+        greeting = "Not Yet";
+    } else {
+        greeting = "Good Night Mason";
+    }
+    document.getElementById("bedTime").innerHTML = greeting;
+}
+
+
+
+</script>
+</body>
+</html>

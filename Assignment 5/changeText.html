@@ -1,0 +1,46 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/pilamo/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<style id="jsbin-css">
+h1 {
+  color:purple
+}
+h5 {
+  color:brown
+}
+</style>
+<meta name="description" content="Assignment 4 Change Output">
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Assignment 4 Output of Input After Manipulated</h2>
+  <p>I'm honestly not very confident I am playing with the right script for this one.</p>
+
+<form>
+Guess my favorite destination to relax with my family.
+<select id="myDestination">
+  <option>Vegas</option>
+  <option>The Beach</option>
+  <option>The Lake</option>
+  <option>The Pool</option>
+</select>
+<br><br>
+<input type="button" onclick="changeText()" value="Pick a Destination">
+</form>
+
+<script id="jsbin-javascript">
+function changeText() {
+    x = document.getElementById("myDestination");
+    x.options[x.selectedIndex].text = "The Beach";
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/mafiyon/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<style id="jsbin-css">
+h1 {
+  color:purple
+}
+h5 {
+  color:brown
+}
+</style>
+<meta name="description" content="Object using javascript">
+<!DOCTYPE html>
+<html>
+<body>
+
+  <h2>Assignment 4 - Object</h2>
+<p>This is a JavaScript Object.</p>
+
+<p id="javascriptObject"></p>
+
+<p id="javascriptObject2"></p>
+<script id="jsbin-javascript">
+var dog = {
+    name : "Winston",
+    behavior  : "Bad",
+    breed    : "Beagle",
+    
+};
+
+document.getElementById("javascriptObject").innerHTML =
+dog.name + " is a " + dog.breed + " breed of dog. He is " + dog.behavior + "to the core.";
+
+
+var dog = {
+    name : "Miles",
+    behavior : "Good",
+    breed    : "Retriever",
+    
+};
+
+document.getElementById("javascriptObject2").innerHTML =
+dog.name + " is a " + dog.breed + " breed of dog. He is " + dog.behavior + ".";
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/fekuri/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<meta name="description" content="Assignment 4 - For Loop">
+<!DOCTYPE html>
+<html>
+
+<body>
+  <h2>Assignment 4 Loop</h2>
+  <h3>I believe this is a "For Loop"</h3>
+  <p>My beloved husband and I are spending 4 nights in LasVegas togother this weekend. Select the things you think we should do?</p>
+<form name="selectForm">
+  <p>
+    <label for="vegasTodo">Choose</label>
+    <select id="vegasTodo" name="vegasTodo" multiple="multiple">
+      <option selected="selected">Gamble</option>
+      <option>Hoover Dam</option>
+      <option>See a show</option>
+      <option>New Age</option>
+      <option>Happy Hour</option>
+      <option>Buffet</option>
+    </select>
+  </p>
+  <p><input id="btn" type="button" value="How many things shall we do?" /></p>
+</form>
+
+<script id="jsbin-javascript">
+
+function howMany(selectObject) {
+  var numberSelected = 0;
+  for (var i = 0; i < selectObject.options.length; i++) {
+    if (selectObject.options[i].selected) {
+      numberSelected++;
+    }
+  }
+  return numberSelected;
+}
+
+var btn = document.getElementById('btn');
+btn.addEventListener('click', function() {
+  alert('Number of options selected: ' + howMany(document.selectForm.vegasTodo));
+});
+
+</script>
+</body>
+</html>

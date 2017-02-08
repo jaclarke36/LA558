@@ -1,0 +1,53 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/quseno/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<meta name="description" content="Assignment 4 Function using Array">
+<!DOCTYPE html>
+<html>
+<body>
+
+  <h1>Assignment 4 Function Using Array</h1>
+<p>Click the button to check if any of the elements in the array has a value of 21 or more.</p>
+
+<button onclick="adultFunction()">This Button</button>
+
+<p id="demo"></p>
+
+
+  <p>Click the button to check if any of the elements in the array has a value of 21 or more.</p>
+
+<button onclick="minorFunction()">Now This Button</button>
+
+<p id="demo"></p>
+
+  
+<script id="jsbin-javascript">
+var ages = [3, 10, 18, 20,];
+
+function checkAdult(age) {
+    return age >= 21;
+}
+
+function adultFunction() {
+    document.getElementById("demo").innerHTML = ages.some(checkAdult);
+}
+
+var ages = [3, 10, 18, 20,];
+
+function checkMinor(age) {
+    return age <= 21;
+}
+
+function minorFunction() {
+    document.getElementById("demo").innerHTML = ages.some(checkMinor);
+}
+
+</script>
+</body>
+</html>
