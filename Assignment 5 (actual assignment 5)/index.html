@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/fequvam/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 5">
+
+  <meta charset="utf-8">
+  
+<title>JS Bin Assignment 5 Embed Map</title>
+</head>
+<body>
+  <h1>My Assignment 5 with Embeded Map</h5>
+ 
+ <body>
+
+<p>Click the button to change the value of the text field.</p>
+
+<button onclick="myFunction()">Try it</button>
+  Check Here if you like the beach: <input type="checkbox" name="multi_note" value="1" onclick="showMe('div1', this)">
+
+<div id="div1" style="display:none">
+Good Let's Talk about the Beach
+</div>
+
+  
+
+ 
+  <p>What is your favorite thing to do at the beach?</p>
+
+<form>
+<input type="radio" name="browser" onclick="check(this.value)" value="Sand">Sand<br>
+<input type="radio" name="browser" onclick="check(this.value)" value="Sun">Sun<br>
+<input type="radio" name="browser" onclick="check(this.value)" value="Swimming">Swimming<br>
+<input type="radio" name="browser" onclick="check(this.value)" value="Shelling">Shelling<br>
+<input type="radio" name="browser" onclick="check(this.value)" value="Fishing">Fishing<br>
+<br>
+Your favorite thing to do at the beach  is: <input type="text" id="answer" size="20">
+</form>
+  
+  <h2>This is my happy place</h2>
+  <p>Broadkill Beach in Delaware is a beautiful and quiet beach. It's a small community with only one store. It's not far from more popular resort towns. Surrounded by a wildlife refuge, it truly is a natural little piece of paradise. My primary residence is about an hour awar from Broadkill Beach, but in the summer I spend one week a month here and every weekend. I love that my son is rowing up on a beach and learning to fish and enjoy simplicity.</p>
+
+  <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=broadkill%20beach&key=AIzaSyCCIqiKRR0UY8zniwOpZGDs8-uLO0Jt0RQ" allowfullscreen></iframe>
+  
+     
+  <p> Do you think I love Broadkill Beach? </p>
+  
+  <form>
+    If yes, check here<input type="checkbox" name="checkfield" id="g01-01"  onchange="doalert(this.id)"/>
+       
+</form>
+   
+   <br>
+   <ul>
+<body>
+
+Name of the Beach I love: <input type="text" id="myText" value="Type Here">
+<p>Click this button and your text will change to the correct answer.</p>
+
+<button onclick="myFunction()">This button</button>
+  </ul>
+
+
+
+</body> 
+<script id="jsbin-javascript">
+function doalert(id){
+  if(this.checked) {
+     alert('What do you think?');
+  }else{
+     alert('You Bet I do');
+  }
+}
+
+function check(browser) {
+    document.getElementById("answer").value=browser;
+}
+
+function showMe (it, box) {
+var vis = (box.checked) ? "block" : "none";
+document.getElementById(it).style.display = vis;
+}
+
+
+function myFunction() {
+    document.getElementById("myText").value = "Broadkill";
+}
+
+</script>
+</body>
+</html>
