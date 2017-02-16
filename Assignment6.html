@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/biyikah/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 6 Jquery">
+   
+</head>
+  <h1>Assignment 6 - JQuery</h1>
+  <h2>Jennifer Stant Clarke</h2>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h2>1)This is my .ID selector - only the paragraph with ID "testing" will dissapear</h2>
+
+<p>When you click the blue link below anything with an element ID of "testing" will dissapear. Not this one, because this does not have that ID.</p>
+<p>One thing that took a bit to figure out was how to make it so that all paragraphs don't go away. I was using two buttons on the page and my code said that buttons would make paragraph elements go away (different example). When I changed this to a link I was able to only command the paragraph with the ID "testing" to dissapear.
+<p id="testing">This is the paragraph that will dissapiea. This is a paragraph using an ID "testing". This is the paragraph that will go away. All others will remain here.</p>
+
+<ul>Click this sentence and the bottom paragraph with the ID "Testing" will disspear. pargraphs go away</ul>
+
+  
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+  <h2>2) This is my element selector using a button</h2>
+
+<p>Upon clicking, this button makes all paragraphs go away.</p>
+
+<button>Click me and all paragraphs go away</button>
+
+</body>
+<br>
+  
+  
+	<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+	
+<body>
+<br>
+  <style id="jsbin-css">
+h1 {
+	color: blue;
+}
+
+
+.purple {
+	color: purple;
+}
+.black {
+	color: black;
+}
+.green {
+	color: green;
+}
+
+
+
+ul {
+  color: blue;
+  
+}
+</style>
+</head>
+ 
+<h2><strong><span id = 'example'>3) Using the Class to change color (Thank you Professor for this example)</span></strong><br></h2>
+  <p>I hope it's okay that I used this. I did change the color in the code </p>
+  
+Clicking the color 
+  <span class = "purple">purple</span>,
+<span class = "green">green</span> or 
+<span class = "black">black</span>
+will change the color of the example's title.<br>
+	
+</body>
+
+
+<script id="jsbin-javascript">
+
+$(document).ready(function(){
+    $("button").click(function(){
+        $("p").hide();
+    });
+});
+
+
+$(document).ready(function(){
+   
+	
+
+	$(".purple").click(function(){
+        $("#example").css('color', 'purple');
+    });
+	
+	$(".green").click(function(){
+        $("#example").css('color', 'green');
+    });
+	
+	$(".black").click(function(){
+        $("#example").css('color', 'black');
+    });
+	
+	
+});
+ 
+
+$(document).ready(function(){
+    $("ul").click(function(){
+        $("#testing").hide();
+    });
+});
+
+
+
+
+
+</script>
+</body>
+
+
+  
+  </html>
