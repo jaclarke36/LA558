@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/teyozi/13/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 8 In Progress">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+	
+<style id="jsbin-css">
+#map {
+     width: 500px;
+     height: 400px;
+     background-color: red;
+}
+
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+
+
+</style>
+</head>
+<body>
+<div id='map'></div>
+	<br>
+	Pan to <a href="javascript:lewes()">Lewes, Delaware</a><br>
+
+
+	<a href="#" id='zoomOut'>Zoom Out</a><br>
+
+	<button id="broadkill">Visit Broadkill Beach</button>
+  <br>
+  Circles indicate areas of interest for beach recreation
+	
+	
+<script id="jsbin-javascript">
+//---- this is a map of delaware
+
+var map = L.map('map').setView([38.65, -75.43], 9);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+//this will add one marker
+L.marker([40, 42]).addTo(map)
+   .bindPopup("Beach");
+   //.openPopup();
+
+
+
+
+//----------Adding multiple town markers----------
+
+//a array list of towns
+var towns = [
+	[38.7209, -75.0760, "Rehoboth Beach, DE"],
+	[38.7776, -75.3099, "Milton, Delaware"],
+	[38.5396, -75.0552, "Bethany Beach, DE"]
+ 
+];
+
+//loop through the array and add a marker for each
+for (var i = 0; i < towns.length; i++) {
+	marker = new L.marker([towns[i][0],towns[i][1]])
+	.bindPopup(towns[i][2])
+	.addTo(map);
+}
+
+
+//----------Links below the Map----------
+
+//Pan to Frasier
+function lewes() {
+	map.panTo(new L.LatLng(38.78, -75.14));
+}
+
+//set Zoom
+$("#zoomOut").click(function(){
+	map.setZoom(8);
+});
+
+
+//BroadkillBeach
+$("#broadkill").click(function(){
+	map.setView(new L.LatLng(38.8282, -75.2119), 15);
+});
+
+
+///---- Adding Polygon ---
+var polygon = L.polygon([
+    [40.509, -0.08],
+    [40.503, -0.06],
+    [40.51, -0.047]
+]).addTo(map);
+
+////--- Adding Circle ---
+var circle = L.circle([38.8282, -75.2119], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+}).addTo(map);
+
+var circle = L.circle([38.8300, -75.2483], {
+    color: 'blue',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+}).addTo(map);
+
+var circle = L.circle([38.8300, -75.2483], {
+    color: 'green',
+    fillColor: 'green',
+    fillOpacity: 0.5,
+    radius: 3200
+}).addTo(map);circle.bindPopup("I am protected wildlife area.");
+ var popup = L.popup();
+map.on('click', onMapClick);   
+
+var circle = L.circle([38.7209, -75.3855], {
+    color: 'red',
+    fillColor: 'red',
+    fillOpacity: 0.5,
+    radius: 4000
+}).addTo(map);circle.bindPopup("Cost of homes go up around here");
+ var popup = L.popup();
+map.on('click', onMapClick);   
+
+
+
+</script>
+</body>
+</html>
