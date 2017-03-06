@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/mobubug/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+
+<meta name="description" content="LA 458/558 13c Leaflet multiple color categorized pin markers using googlemapsmarkers.com - 2017" />
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> 
+	  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  
+<meta name="description" content="Assignment 9 In Progress 3/3 w Help">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+	
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+	
+<style id="jsbin-css">
+#map {
+     width: 500px;
+     height: 400px;
+     /*background-color: red;*/
+}
+
+ html, body, 
+
+#map { height: 280px; margin: 0; padding: 0; }
+
+
+</style>
+</head>
+<body>
+<div id='map'></div>
+	<br>
+	Pan to <a href="javascript:lewes()">Lewes, Delaware</a><br>
+
+
+	<a href="#" id='zoomOut'>Zoom Out</a><br>
+
+	<button id="broadkill">Visit Broadkill Beach</button>
+  <br>
+  Circles indicate areas of interest for beach recreation
+	
+  
+<script id="jsbin-javascript">
+
+console.clear();
+
+//---- this is a map of delaware
+
+var map = L.map('map').setView([38.65, -75.43], 9);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// add an OpenCycle tile layer
+L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenCycleMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+
+var myPoints = [
+  ["79", 38.6209, -75.2855, "a"],
+  ["88", 38.5209, -75.1855, "b"],
+  ["55", 38.4209, -75.0855, "c"],
+  ["43", 38.7209, -75.3855, "d"],
+  ["80", 38.8209, -75.3955, "e"],
+  ["0", 38.8300, -75.4002, "f"],
+  ["34", 38.8400, -75.4075, "g"],
+  ["12", 38.8000, -75.3050, "h"],
+  ["39", 38.6900, -75.2030, "i"],
+  ["99", 38.7000, -75.635769, "Blue Crab Capital"],
+];
+
+
+//set color of marker
+function getColor(d) {
+  return d == 'a' ? '#f7fcfd' :
+    d == 'b' ? '#e5f5f9' :
+    d == 'c' ? '#99d8c9' :
+    d == 'd' ? '#66c2a4' :
+    d == 'e' ? '#41ae76' :
+    "FFFFFF";
+    //white
+}
+
+
+  for (var i = 0; i < myPoints.length; i++) {
+    marker = new L.circleMarker([myPoints[i][1],myPoints[i][2]], {
+		radius: myPoints[i][0]/2,
+		fillColor: getColor(myPoints[i][3]), 
+		color: "#000",
+		weight: 0,
+		opacity: 1,
+		fillOpacity: 0.7    
+    })
+    .bindPopup("Category: "+myPoints[i][3]) //note there is no comma here
+		.addTo(map);
+		}
+
+
+
+
+//----For assignment 9 - custom icon of a shipwreck off of fenwick island
+var shipwreck = L.icon({
+  iconUrl: 'https://d30y9cdsu7xlg0.cloudfront.net/png/4481-200.png',
+  shadowUrl: 'https://maps.google.com/mapfiles/arrowshadow.png',
+
+  iconSize: [50, 50], // size of the icon
+  shadowSize: [39, 34], // size of the shadow
+  iconAnchor: [10, 34], // point of the icon which will correspond to marker's location
+  shadowAnchor: [10, 34], // the same for the shadow
+  //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
+});
+
+
+
+var marker = L.marker([38.46, -75.05], {}).addTo(map);
+
+var marker1 = L.marker([38.46, -75.05], {
+  icon: shipwreck,
+  draggable: true,
+  title: "the Title",
+  opacity: 1
+}).addTo(map);
+
+
+var marker4 = L.marker([38.9129, -75.3041], {}).addTo(map);
+
+//----------Adding multiple town markers----------
+
+//a array list of towns
+var towns = [
+  [38.7209, -75.0760, "Rehoboth Beach, DE"],
+  [38.7776, -75.3099, "Milton, Delaware"],
+  [38.5396, -75.0552, "Bethany Beach, DE"],
+  [38.4623, -75.0513, "Fenwick Island, DE"],
+
+
+];
+
+//loop through the array and add a marker for each
+for (var i = 0; i < towns.length; i++) {
+  marker = new L.marker([towns[i][0], towns[i][1]])
+    .bindPopup(towns[i][2])
+    .addTo(map);
+}
+
+////--- Adding Circle ---
+
+var circle = L.circle([38.8282, -75.2119], {
+  color: 'red',
+  fillColor: '#f03',
+  fillOpacity: 0.5,
+  radius: 500
+}).bindPopup("something").addTo(map);
+
+
+var circle = L.circle([38.8300, -75.2483], {
+  color: 'green',
+  fillColor: 'green',
+  fillOpacity: 0.5,
+  radius: 3200
+}).bindPopup("I am protected wildlife area.").addTo(map);
+
+
+var circle = L.circle([38.7209, -75.3855], {
+  color: 'red',
+  fillColor: 'red',
+  fillOpacity: 0.5,
+  radius: 4000
+}).addTo(map);
+
+///// Assignment 9 adding style in pop ups third attempt - 
+
+circle.bindPopup("Cost of Homes go up around here<br><strong>590K - Millions $$$</strong><br>Some celebrity homes even", {
+  maxWidth: 200, 
+  minWidth: 170, 
+  maxHeight: 40, 
+  autoPan: true, 
+  keepInView: true,
+  closeButton: true, 
+  autoPanPadding: [25, 5],
+  //offset: [0, 0]
+});
+
+circle.openPopup();
+$('button').click(function() {
+  var popup = marker2._popup;
+  newText = $('#newText').val();
+  popup.setContent(newText);
+});
+
+
+
+
+
+var circle = L.circle([38.8300, -75.2483], {
+  color: 'blue',
+  fillColor: '#f03',
+  fillOpacity: 0.5,
+  radius: 500
+}).addTo(map);
+
+var circle = L.circle([38.8300, -75.2483], {
+  color: 'green',
+  fillColor: 'green',
+  fillOpacity: 0.5,
+  radius: 3200
+}).addTo(map);
+circle.bindPopup("I am protected wildlife area.");
+var popup = L.popup();
+map.on('click', onMapClick);
+
+var circle = L.circle([38.7209, -75.3855], {
+  color: 'red',
+  fillColor: 'red',
+  fillOpacity: 0.5,
+  radius: 4000
+}).addTo(map);
+circle.bindPopup("Cost of homes go up around here");
+var popup = L.popup();
+map.on('click', onMapClick);
+
+
+//----------Links below the Map----------
+
+//Pan to Lewes
+function lewes() {
+  map.panTo(new L.LatLng(38.78, -75.14));
+}
+
+//set Zoom
+$("#zoomOut").click(function() {
+  map.setZoom(8);
+});
+
+
+//BroadkillBeach
+$("#broadkill").click(function() {
+  map.setView(new L.LatLng(38.8282, -75.2119), 15);
+});
+
+</script>
+</body>
+</html>
