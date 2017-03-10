@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/teyozi/22/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 10 
+version 2">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+	
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.jst"></script>
+  
+  </head>
+  
+  <body>
+    <button type="button" id='FarmforSale'>Farm for Sale</button><br>
+    <button type="button" id='Rehoboth'>Rehoboth Beach</button><br>
+    <button type="buton" id='getZoom'>Get Zoom</button> the Zoom is <span id='theZoom'>-</span><br>
+    <br>
+    Clicking the fenwick marker will open up a new webpage for the specific resort area<br>
+    
+<div id="map"></div>
+  
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+	
+<style id="jsbin-css">
+#map {
+     width: 500px;
+     height: 400px;
+}
+
+ 
+
+
+</style>
+</head>
+<body>
+<div id='map'></div>
+	<br>
+	Pan to <a href="javascript:lewes()">Lewes, Delaware</a><br>
+
+
+	<a href="#" id='zoomOut'>Zoom Out</a><br>
+
+	<button id="broadkill">Visit Broadkill Beach</button>
+  <br>
+  Circles indicate areas of interest for beach recreation
+	
+	
+<script id="jsbin-javascript">
+//---- this is a map of delaware
+
+var map = L.map('map').setView([38.8, -75.21], 9);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+
+
+///----Adding Marker with a link //event 1
+var marker1 = L.marker([38.8, -75.2119]).addTo(map);
+
+marker1.bindPopup($('<a href="#" class="speciallink">Where is my Happy Place?</a>').click(function() {
+    alert("Broadkill Beach Delaware");
+})[0]);
+
+
+
+//url to Fenwick Island// Event 2
+
+
+var points = [
+    ["P1", 38.462, -75.051, "Fen", "https://en.wikipedia.org/wiki/Fenwick_Island,_Delaware"],
+  ];
+  var marker = [];
+  //var i;
+        for (i = 0; i < points.length; i++) {
+                marker[i] = L.marker([points[i][1], points[i][2]], {
+                        title: points[i][3],
+                        win_url: points[i][4]
+                }).addTo(map);
+                //marker[i].addTo(map);
+                marker[i].on('click', onClick);
+        }
+
+function onClick(e) {
+  console.log(this.options.win_url);
+  window.open(this.options.win_url);
+}
+
+/// Event 4 and 5 ///
+/// map.setView(location, map.getZoom<));
+
+$('#FarmforSale').click(function () {
+  c = new L.LatLng (38.82, -75.21);
+  map.setView(c, 12);
+});
+
+$('#Rehoboth').click(function () {
+  c = new L.LatLng (38.72, -75.07);
+  map.setView(c, 14);
+});
+
+$('#getZoom').click(function() {
+  x = map.getZoom();
+  $('#theZoom').html(x);
+});
+
+</script>
+</body>
+</html>
