@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/viqele/7/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+  <head>
+    <meta name="description" content="3/16 Assignment 12 3pm" />
+    <p>Places I've Been.</p>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <style id="jsbin-css">
+html, body, 
+
+#map { height: 480px; margin: 0; padding: 0; }
+
+.legend {
+    line-height: 10px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+	width: 80px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+
+</style>
+</head>
+
+  <input type="button" value="Zoom to Happy Place" onclick="zoomPoly();" />
+  
+  <body>
+<div id="map"></div>
+  <script id="jsbin-javascript">
+console.clear();
+
+//JSON 
+var cities = [{
+    "name" : "Broadkill Beach",
+    "lat" : "38.82",
+    "long" : "-75.21",
+    "iconColor" : "0000ff",
+    "popupText" : "The city is my happy place"
+},
+{
+    "name" : "Austin",
+    "lat" : "30.26",
+    "long" : "-97.7431",
+    "iconColor" : "ff0000",
+    "popupText" : "The city is Austin Texas. My mom and I had fun here."
+}];
+
+
+//GeoJSON
+var myGeoJSON = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.0933837890625,
+          29.95136495173933
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.7508544921875,
+          30.276858411864904
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17242431640624,
+          36.1822249804225
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.66259765625,
+          25.48295117535531
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.22296142578125,
+          17.528820674552627
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.774444580078125,
+          51.232257635125485
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70214843749997,
+          35.639441068973944
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff00ff",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.11947631835937499,
+          51.50532341149335
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ffff00",
+        "marker-size": "medium",
+        "marker-symbol": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.21248817443848,
+          38.82825797495719
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -75.21259546279907,
+            38.82827469110051
+          ],
+          [
+            -75.22347450256348,
+            38.83656541436778
+          ],
+          [
+            -75.14579772949219,
+            38.77068102544212
+          ],
+          [
+            -75.09292602539062,
+            38.77710492428489
+          ]
+        ]
+      }
+    }
+  ]
+}
+
+//Base Layers
+var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+});
+
+//create the map
+var map = L.map('map', {
+  center: new L.LatLng(42, -93),
+  zoom: 2,
+  layers: [OSM]
+});
+
+
+//Adding JSON to map
+
+var iconMarkerURL = "http://www.googlemapsmarkers.com/v1/";
+
+ for (var i = 0; i < cities.length; i++) {
+
+  //access the data by index i   for example 
+  console.log(cities[i].name);
+  
+  var marker = L.marker([cities[i].lat, cities[i].long], {    
+    icon: L.icon({
+      iconUrl: iconMarkerURL + cities[i].iconColor,
+      iconSize:[10, 17],
+      iconAnchor:[5, 17],
+      popupAnchor:[0, -20]
+    }),
+    title: cities[i].name
+  }).bindPopup("<b>"+cities[i].name+"</b><br>"+cities[i].popupText+".").addTo(map);
+}
+
+//style for geojson polyline and polygons
+//Markers will use default
+var myStyle = {
+    "color": "#ff7800",
+    "weight": 5,
+    "opacity": 0.65,
+};
+
+//Base Layers
+var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 4
+});
+
+/// polyline of my favorite area///
+
+function zoomPoly() {
+        map.setView([38, -75], 8);
+}
+
+var polygon = L.polygon([
+    [38, -75],
+    [38, -75],
+    [38, -75]
+], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+}).addTo(map);
+
+
+//Marker for Georgia with bindpop and link to where I was born and a hyperlink control //
+
+var points = [
+    ["P1", 32.08, -81.09, "Where I was born", "http://www.savannah.com/"],
+  ];
+  var marker = [];
+  //var i;
+        for (i = 0; i < points.length; i++) {
+                marker[i] = L.marker([points[i][1], points[i][2]], {
+                        title: points[i][3],
+                        win_url: points[i][4]
+                }).addTo(map);
+                //marker[i].addTo(map);
+                marker[i].on('click', onClick);
+        }
+
+function onClick(e) {
+  console.log(this.options.win_url);
+  window.open(this.options.win_url);
+}
+
+L.geoJSON(myGeoJSON, {
+    style: myStyle,
+}).addTo(map);
+
+
+
+var myPoints = [
+  ["20", 25.03, -77.39, "aig", "honeymoon"],
+  ["15", 29.951, -90.07, "21st", "friends weekend"],
+  ["19", 36.16, -115.1398, "farmers", "40th birthday"],
+  ["12", 30.26, -97.74, "qvc", "winter escape"],
+  ["5", 28.58, -81.37, "ic", "30th birthday"],
+  ["14", 35.68, 139.69, "conference", "colleague visit"],
+  ["23", 51.48, -0.26, "school", "research"],
+  ["6", 51.22, -6.77, "farmers", "friends weekend"],
+  ["14", 15.7835, -90.2308, "farmers", "winter escape"],
+];
+
+//set color of marker
+function getColorWork(d) {
+  return d == 'aig' ? "#2c7fb8" :
+    d == '21st' ? "#41b6c4" :
+    d == 'farmers' ? "#a1dab4" :
+    d == 'ic' ? "#ffffcc" :
+    "#FFFFFF"; //white
+}
+
+function getColorLeisure(d) {
+  return d == 'honeymoon' ? 'tan' :
+    d == 'friends weekend' ? "brown" :
+    d == '40th birthday' ? "orange" :
+    d == 'winter escape' ? "yellow" :
+    d == '30th birthday' ? "green" :
+    "#FFFFFF"; //white
+}
+
+
+
+var workLayerGroup = L.layerGroup([]);
+
+for (var i = 0; i < myPoints.length; i++) {
+  marker = new L.circleMarker([myPoints[i][1], myPoints[i][2]], {
+      radius: myPoints[i][0] / 2 + 5,
+      fillColor: getColorWork(myPoints[i][3]),
+      color: "#000",
+      weight: 0,
+      opacity: 1,
+      fillOpacity: 0.9
+    })
+    .bindPopup("Category: " + myPoints[i][3]) //note there is no comma here
+    .addTo(workLayerGroup);
+	workLayerGroup.addTo(map);
+}
+
+
+
+var bothLayerGroup = L.layerGroup([]);
+
+for (var i = 0; i < myPoints.length; i++) {
+	num = Math.random(); // this will get a number between 0 and 1;
+	num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
+
+  marker = new L.circleMarker([myPoints[i][1]+num, myPoints[i][2]+num], {
+     radius: myPoints[i][0] / 2 + 5,
+     fillColor: getColorLeisure(myPoints[i][4]),
+	 //fillColor: 'blue',
+      color: "#000",
+      weight: 0,
+      opacity: 1,
+      fillOpacity: 0.9
+    })
+    .bindPopup("Category: " + myPoints[i][4]) //note there is no comma here
+    .addTo(bothLayerGroup);
+	
+	bothLayerGroup.addTo(map);
+}
+
+
+//Create individual Legends
+var legend1 = L.control({
+  position: 'bottomleft'
+	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend1.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    work = ['aig', '21st', 'farmers', 'qvc', 'ic'],
+    labels = [''];
+
+	 div.innerHTML += "<b>Work Travel</b><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < work.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColorWork(work[i]) + ' "></i> ' +
+      work[i] + (work ? '' + '<br>' : '');
+  }
+
+  return div;
+};
+legend1.addTo(map);
+
+
+
+var legend2 = L.control({
+  position: 'bottomleft'
+	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend2.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    work = ['honeymoon', 'friends weekend', '40th birthday', 'winter escape', '30th birthday'],
+    labels = [''];
+
+	 div.innerHTML += "<b>Leisure Travel</b><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < work.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColorLeisure(work[i]) + ' "></i> ' +
+      work[i] + (work ? '' + '<br>' : '');
+  }
+
+  return div;
+};
+legend2.addTo(map);
+
+
+
+
+
+//layer control
+var baseMaps = {
+	"OpenStreetMap": osm,
+
+};
+
+var overlayMaps = {
+	"Work circles": workLayerGroup,
+	"Both circles": bothLayerGroup
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+
+
+
+
+
+// Add and remove legend from layers when selected in control
+map.on('overlayremove', function (eventLayer) {
+	console.log(eventLayer.name  + " off");
+	if (eventLayer.name == "Work circles") {
+		this.removeControl(legend1);
+	}else if (eventLayer.name == "Both circles"){
+		this.removeControl(legend2);
+	}
+});
+
+map.on('overlayadd', function (eventLayer) {
+	console.log(eventLayer.name + " on");
+	if (eventLayer.name == "Work circles") {
+		 legend1.addTo(this);
+	}else if (eventLayer.name == "Both circles"){
+		 legend2.addTo(this);
+	}	
+});
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
