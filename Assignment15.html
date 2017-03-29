@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/teyozi/26/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 15 
+version 1">
+  <meta charset="utf-8">
+  
+  <p>Adding Awesome Markers to Delaware</p>
+  
+  <!--External CSS-->
+ 
+                
+      	 
+                             
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="https://profseeger.github.io/LA558/classes/Leaflet.awesome-markers/leaflet.awesome-markers.css">
+	
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	
+	
+	<!--External JS-->	
+
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+	
+
+   <script src="https://profseeger.github.io/LA558/classes/Leaflet.awesome-markers/leaflet.awesome-markers.js"></script>
+
+  <script src="http://129.186.142.145/indicators/classes/leaflet-awesome-markers/dist/leaflet.awesome-markers.js"></script>
+
+
+    
+
+<style id="jsbin-css">
+#map {
+     width: 500px;
+     height: 400px;
+}
+
+ 
+
+
+</style>
+</head>
+
+<body>
+	 
+	 <div id="map"></div>
+	
+    <div class="btn-group">
+        <button type="button" id="allRecreation" class="btn btn-success">All Rec. </button>
+        <button type="button" id="coffee" class="btn btn-success">Coffee</button>
+        <button type="button" id="flag" class="btn btn-success">Flag</button>
+		    </div>
+
+   
+
+<script id="jsbin-javascript">
+//---- this is a map of delaware
+
+var map = L.map('map').setView([38.8, -75.21], 9);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+
+//font Awesome possible colors are as follows - no yellow?
+
+//['red', 'blue', 'green', 'purple', 'orange', 'darkred', 'lightred', 'beige', 'darkblue', 'darkgreen', 'cadetblue', 'darkpurple', 'white', 'pink', 'lightblue', 'lightgreen', 'gray', 'black', 'lightgray']
+
+var marker1 = L.marker([38.53, -75.05], {
+		icon: L.AwesomeMarkers.icon({
+			icon: 'shopping-cart', 
+			prefix: 'fa', //from fonts awesome
+			markerColor: 'green',
+			iconColor: 'yellow',
+			spin: false
+		}) 
+});
+
+
+var marker2 = L.marker([38.72, -75.07], {
+		icon: L.AwesomeMarkers.icon({
+			icon: 'shopping-cart', 
+			prefix: 'glyphicon', //from Bootstrap
+			markerColor: 'green',
+			iconColor: 'yellow'
+		}) 
+});
+
+var marker3 = L.marker([38.77, -75.1393], {
+		icon: L.AwesomeMarkers.icon({
+			icon: 'coffee', 
+			prefix: 'fa', 
+			markerColor: 'beige',
+			iconColor: 'yellow'
+		}) 
+});
+
+var marker4 = L.marker([38.15, -75.52], {
+		icon: L.AwesomeMarkers.icon({
+			icon: 'flag', 
+			prefix: 'fa', 
+			markerColor: 'blue',
+			iconColor: 'yellow'
+		}) 
+});
+
+var marker5 = L.marker([38.8776, -75.0623], {
+		icon: L.AwesomeMarkers.icon({
+			icon: 'flag', 
+			prefix: 'fa', 
+			markerColor: 'white',
+			iconColor: 'black'
+		}) 
+});
+
+
+  var squareRedMarker = L.AwesomeMarkers.icon({
+    icon: 'coffee',
+	  prefix: 'fa', 
+    markerColor: 'red',
+    className: 'awesome-marker awesome-marker-square'
+  });
+
+//note this is a feature group and not a layer group
+var allMarkers = new L.featureGroup([marker1, marker2, marker3, marker4, marker5]);
+allMarkers.addTo(map);
+
+map.fitBounds(allMarkers.getBounds(), {
+   padding: [100, 100]
+	//see http://leafletjs.com/reference-1.0.3.html#fitbounds-options-paddingtopleft
+});
+
+//allRecreation.addTo(map);
+  coffee.addTo(map);
+  flag.addTo(map);
+//allRecreation1.addTo(map);
+
+  $("#allRecreation").click(function() {
+    //map.addLayer(allRecreation);
+    map.addLayer(coffee);
+    map.addLayer(flag);
+    });
+  $("#coffee").click(function() {
+    map.addLayer(coffee);
+    map.removeLayer(flag);
+  });
+
+  $("#flag").click(function() {
+    map.removeLayer(coffee);
+    map.addLayer(flag);
+  });
+
+// ...and a Polygon..I thought this was the Harry Wood Method
+
+         var p1 = new L.LatLng(38.8776, -75.0623),
+             p2 = new L.LatLng(38.15, -75.52),
+             p3 = new L.LatLng(38.77, -75.1393),
+             polygonPoints = [p1, p2, p3];
+         
+         var polygon = new L.Polygon(polygonPoints);
+         map.addLayer(polygon);
+  
+
+
+</script>
+</body>
+
+
+
+
+</html>
