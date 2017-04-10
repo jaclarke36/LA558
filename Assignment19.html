@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/wopuzim/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+  <head>
+
+<meta name="description" content="Assignment 19 version 2" />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> 
+	  
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+	  
+  </head>
+  <body>
+	  Enter the address: <input type="text" id="myAddress">
+	  <br><button type="button" id='geocode'>Click Me!</button>
+	  <br><br>
+    
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<style id="jsbin-css">
+html, body, 
+
+#map { height: 280px; margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+	<button onclick="getLocation()">Get location</button>
+	
+
+	<div id = "myLocation">my location is not set</div>
+<div id="map"></div>
+  <script id="jsbin-javascript">
+console.clear();
+
+var map = L.map('map').setView([43, -93], 12);
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+}).addTo(map);
+
+// $('#myAddress').val('1307 Florida Ave., Ames, IA, 50014');//
+
+
+$('#geocode').click(function () {
+    myAddress = encodeURI($('#myAddress').val());
+    //now take this address and send it to your geocoder of choice
+
+    //var geocodingAPI_URL = "http://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address="+myAddress+"&benchmark=9&format=json";
+
+
+    var geocodingAPI_URL = "http://maps.googleapis.com/maps/api/geocode/json?address=" + myAddress + "&sensor=true";
+
+    console.log(geocodingAPI_URL);
+
+    //Start Geocoding
+    $.getJSON(geocodingAPI_URL, function (json) {
+        //console.log(json.results[0].address_components);
+        //console.log(json.status);
+        var address = json.results[0].formatted_address;
+        var lat = json.results[0].geometry.location.lat;
+        var long = json.results[0].geometry.location.lng;
+        console.log(address);
+        console.log(lat);
+        console.log(long);
+        var county = '';
+        $.each(json.results[0].address_components, function (i, jsonData) {
+            level = jsonData.types[0];
+            if ('administrative_area_level_2' === level.toLowerCase()) {
+                county = (jsonData.short_name);
+            }
+        });
+        console.log("I am in " + county + "!");
+
+
+        //now add the marker to the map
+        var marker = L.marker([lat, long], {
+            draggable: false,
+            title: county,
+            opacity: 0.75
+        }).addTo(map);
+
+        marker.bindPopup(county + address + lat + long).openPopup();
+     
+		
+		map.setView([lat, long]);
+
+
+    });
+}); //end geocode click function
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        $("#myLocation").html("Geolocation is not supported by this browser.");
+    }
+}
+function showPosition(position) {
+	 $("#myLocation").html("Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude);
+}
+</script>
+</body>
+</html>
