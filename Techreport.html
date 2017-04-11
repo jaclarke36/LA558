@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/mokita/10/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta name="description" content="Tech Report">
+  <meta charset="utf-8">
+  <meta charset="viewport"
+  <title>Jennifer Stant-Clarke
+558 Tech Report</title>
+<style id="jsbin-css">
+li {
+  display: inline;
+  padding: 20px;
+  color:blue;
+}
+*/
+h1 {
+  color:purple
+}
+h5 {
+  color:brown
+}
+</style>
+</head>
+<h1>Utilizing data from wearable computers to visualize your activity</h1>
+
+<body>
+  
+    
+    <hr>
+    <br>
+ 
+  <p>
+A little over 3 years ago I logged onto Facebook as I usually did while sitting on the couch and thinking about what activities I might consider that day, none of which, included any type of physical fitness activity. While scrolling through my feed I saw a map with a red line and a mileage. It was posted by a friend who said something along the lines of “I can’t believe that just eight weeks ago I could not run for more than 2 minutes.” I remember this like yesterday, thinking to myself, if she can do it so can I. <br>
+    <br>
+And so, in that moment, looking at that little map I decided to become a runner. My journey started as hers did as I used the “couch to 5k” app to track and map an eight week program that brought me to my first 5k. Every pixel of those maps represents hard work, personal sacrifice and physical triumph. Never did I think I’d be writing about pixels in to the tone of “physical triumph” but here we are.<br>
+    <br>
+Since that first 8 week program, I’ve ran an average of 150 miles per month. I ran in the middle of the ocean (on a cruise ship). I ran in Japan. I ran in Germany. I ran in London. I finished a marathon in Philadelphia (that’s 26.2 miles!). I placed first in several 5k races. I’ve ran over a dozen half marathons and I’ve carefully calculated and obsessed over every meter tracked.<br>
+    <br>
+Which brings me to my topic of interest. What could I do with all of that data? Those runs in Japan were once in a lifetime, an opportunity only afforded to me thanks to a global onboarding process for my new employer. That marathon was the greatest accomplishment of my life next to creating and birthing my son. So, what can I do with all of that data? I have the mapped runs posted to my Facebook as an image, a memory. But now, after a couple of months in this course I can no longer look at these maps the same way. I see them as an opportunity to tell a story. <br>
+    <br>
+The data visualization of my activity is something I see everywhere. I see it in the little target shaped image on my smart watch. I see it on my Facebook page when my friend tags me in the results of a recent race I ran. I see it in my training app as I prepare to hopefully PR in my favorite half marathon. 
+    <br>
+    <br>
+I wanted to investigate how I could use this information to create my own map. Maybe I could create a map that tells the history and story of my lifetime of running. The following report is an investigation of some methods that could be used to bring the data from wearable devices into beautiful maps.
+    <br>
+    <br>
+The first technique that I explored was something I read about in a blog titled <a href="https://www.mapbox.com/blog/mapping-moves/">Mapping Your Moves.</a> In this article, the author talks about how Facebook acquired “Moves” (in 2014) that tracked data and allows you to export the data to be used in maps. By using the export feature, “Moves” will export the data into a number of formatting options. The GPX format takes advantage of a smart feature that filters the types of activities. <br>
+    <br>
+    After investigating a little more about the GPX format I learned that <a href="http://www.topografix.com/gpx.asp">GPX is a "GPS Exchange Format"</a> used to describe routes, paths, and waypoints. With “Moves” you can export your data into the GPX format and then take that full data set and converge to a Geojson file. The author of the blog noted that he used a command called “togeojson” to accomplish this, but I think it would be easier to use a converter like the one we used in class. I found a tool called <a href="https://mygeodata.cloud/converter/">“MyGeodata Converter”</a> which appears to offer a solution for converting from GPX to Geojson.  
+    <br>
+    <br>
+    I think it would be really interesting to use this approach to create an activity journal with multiple layers. If I had known about this back when I started running, I could see myself building a map that included multiple layers where I could show the routes for “all” or my races or filter them by event. I may even try to do this during my upcoming training this summer (training for the marine corp marathon). <br>
+    <br>
+	Since I don’t use “Moves”, but instead use Run Keeper, I did a search to see if it is possible to convert data from run keeper. I found that you could also export using he GPX format. I decided to give this a try. I went to run keeper settings and selected “data export.” From there I was able to download my data from 2012 to today. Once done, I went to “My geo data converter” and selected the gpx files for conversion. The free plan allowed for me to only convert one of my runs. I picked a run from my global trip in November of 2016. I converted it to geojson and then downloaded the files. I plan to work on this a when I have some free time and maybe create a webpage that document my training for the marine corp marathon (did I mention I’m running a marathon again?). 
+    <br>
+    <br>
+	Looking for additional techniques and methods, I came across <a href="https://tilemill-project.github.io/tilemill/">“tilemill”</a>   which creates data visualizations from shape files.  In order to accomplish this one could use the <a href="https://ogre.adc4gis.com">ogr2ogr</a> web client in order to convert to a shapefile, as done in our recent assignment (assignment 18).  <br> <br>
+	Now, with a better understanding that you can export and convert data from wearable computers I started to wonder if you could create a website that automatically updates as you run or do other activity. If so, could this also be used as a tracking device in addition to a map of one’s physical activities?  In doing a little research on this, I learned that “moves” does just this. By downloading this app all of your activity is tracked including a storyline of places you’ve been in addition to routes. I tried to figure out how this would work, so I looked at the<a href="https://dev.moves-app.com/docs/api_notifications">developer guide for "Moves" storyline </a>. Here I learned that “Moves” uses a Json array to update storyline events. According to this guide (“Moves for Developers”) you can register a URL that gets a callback, which means that when “moves” gets an update in a set time that impacts the storyline, the call goes to the URL and updates the map. This assumes that the user authorized the action to be updated. I find this to be truly fascinating as a way to archive or share activity, routes and stories. I would be interested in exploring multiple use cases for this including the following: <br>
+    <br>
+-	Map my Vacation – Invite friends to follow you on a journey or exciting vacation
+-	Track my child activity – A way for parents to keep tabs on the level of activity of a child in an effort to help create a healthier lifestyle for a child.
+-	Track my child location – A way for parents to keep track of where their child is located during a school trip or activity.
+    <br>
+    <br>
+With continued practice, I’d really like to build my own map that tracks my running activity to be shared with friends that I run with around the world.
+    <br>
+    <br>
+    
+Finally, in my review of wearable computers and mapping, I found myself interested in the way a wearable computer might leverage augmented realities and maps. 
+    <br>
+    <br>
+    I came across a fascinating article on this topic leveraging a technology called <a href="http://link.springer.com/article/10.1007/BF01408567">“WalkMap”</a>   which summarized the development of an augmented reality map application. The use case here is that while wearing the computer (in this case a head set) you reality around you would change and display contextually useful navigation aids.  It seems logical to me that GIS mapping advancements would lend themselves nicely to augmented reality. With more interest in this, I came across an article called <a href=http://www.esri.com/news/arcuser/0311/augmented-reality-and-gis.html>“Augmented Reality and GIS”</a>which explores this topic further. The authors, Keith Mann and Esri Writer write: “Any developers using an AR toolkit and one of the ArcGIS APIs for Silverlight, Flex, or JavaScript can start building their own AR-GIS apps. The original ARToolkit was developed by Hirokazu Kato of Nara Institute of Science and Technology in 1999 and was released by the University of Washington Human Interface Technology Lab (HITLab). Since 1999, numerous AR Toolkit spinoffs have been created. In 2010, René Schulte ported the ARToolkit to Microsoft's Silverlight platform, which was released as the SLARToolkit.”
+    <br>
+    <br>
+	In conclusion, I am fascinated by how wearable computers take our physical presence and change that into a piece of data that can then be converted to a file which can then create either the illustration of a map (data visualization) and possibly even go further by augmenting our reality with the map surrounding us.
+	
+</p>
+   
+    <img src="https://a.tiles.mapbox.com/v3/heyitsgarrett.hon2f6og/14/4684/6266@2x.png">
+    <br> Source: Mapping Your Moves
+    <br>
+    
+       
+</body>
+</html>
