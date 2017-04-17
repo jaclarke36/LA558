@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/qefudu/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 20 Using Mapbox and Leaflet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <p>
+    This is a map of the Delmarva Peninsula. I created a style in Mapbox where I made the bodies of water a dark blue. I made the roadways a  bold white. I increased the size of the city icons (the circles) and added a whide halo to it.
+  </p>
+	
+<style id="jsbin-css">
+#map {
+     width: 500px;
+     height: 400px;
+
+}
+</style>
+</head>
+<body>
+<div id='map'></div>
+<script id="jsbin-javascript">
+//var map = L.map('map').setView([38.58, -75.52], 8);
+
+
+var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var la458558 = L.tileLayer('https://api.mapbox.com/styles/v1/jastant25/cj1mkf0dq00162rnrxhfkzhxi/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA', {
+    attribution: 'Jenn Made This'
+});
+
+
+var map = L.map('map', {
+    center: [38.58, -75.52],
+    zoom: 8,
+    layers: [osm]
+});
+
+var baseMaps = {
+    "OpenStreetMap": osm,
+	"Jenn Made This":la458558
+};
+
+var overlayMaps = {
+};
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
