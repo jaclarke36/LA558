@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/qefudu/5/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 22 Useful tools from Turf and Proj4js">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+	
+  <h1>A look at Proj4js</h1>
+  <p>
+    Proj4js is a JavaScript library to transform point coordinates from one coordinate system to another.
+    <br>
+    <br>
+Accodring to an article I read (http://api.maps.vic.gov.au/vicmapapi/jsdocs/files/proj/proj4js-js.html) "all coordinates are handled as points which have a .x and a .y property which will be modified in place."
+<br>
+<br>
+ Here are some functions that I think look useful for a future project:<br><br>
+  Transform Function - Looks like this would allow you to tranform a coordinate from one map projection to another. It seems like this would be useful if you want to  customize the map projection for a specific location.<br><br>
+    Report Error Function -  Would give error messages to the user. 
+    
+  </p>
+  
+  <title>JS Bin</title>
+	
+  <h1>A look at Turf</h1>
+  <p>
+    Accourding to their website and guide "Turf is a JavaScript library for adding spatial and statistical analysis to your web maps."<br><br>
+    In general it seems like the main user that would benefit from this tool would be map developers who are having to do statistical analysis as a part of their map creation. For example, if you wanted to correlate health data with a recent act of nature , you could use this tool to visualize the data such as "cancer by radius" against "chemical levels in water" and see if there is a statistical correlation.<br><br>
+    Some functions that lok interesting include<br><br>
+    Event Handler: This is a useful tool that tells the map what to do when a user clicks on a marker such as identifying the closest hotel or the closest place to eat. I could see this as being useful in a travel map.<br><br>
+    Turf Buffer - This function takes a geojson feature and returns a buffer zone.  I think this could be useful if you wanted to analyze an event  radius. 
+    <br><br>
+    Turf Area - This is a function that does math to figure out the area within the buffer. This could be useful if you needed to communicate the approximate space of the area from the event location.
+  </p>
+	
+<style id="jsbin-css">
+#map {
+     width: 500px;
+     height: 400px;
+
+}
+</style>
+</head>
+<body>
+<div id='map'></div>
+</body>
+</html>
