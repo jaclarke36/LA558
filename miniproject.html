@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/viqele/23/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+  <head>
+    <meta name="description" content="Mini Project Next Iteartion 330" />
+    <p>My Next Cruise</p>
+    <p>Here I will celebrate finishing a challenging class (go ahead and guess which class I'm talking about)</p>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <style id="jsbin-css">
+html, body, 
+
+#map { height: 400px; margin: 0; padding: 0; }
+
+.legend {
+    line-height: 10px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+	width: 80px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+
+</style>
+</head>
+  
+  <body>
+
+
+</div>
+    
+      <input type="search" name="search" placeholder="Search for something"/>
+<div id="map">
+
+</div>
+
+  
+</html>
+<script id="jsbin-javascript">
+console.clear();
+
+//create the map///
+var map = L.map('map', {
+  center: new L.LatLng(30.54, -74.96),
+  zoom: 3,
+  minZoom:4,
+  maxZoom: 8
+});
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+
+//Base Layers
+var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+});
+
+//GeoJSON
+var myGeoJSON = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#00ffff",
+        "marker-size": "medium",
+        "marker-symbol": "circle"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.431640625,
+          26.03704188651584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#00ffff",
+        "marker-size": "medium",
+        "marker-symbol": "circle"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.41796875,
+          17.811456088564483
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#00ffff",
+        "marker-size": "medium",
+        "marker-symbol": "circle"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.87109375,
+          18.47960905583197
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff8000",
+        "marker-size": "medium",
+        "marker-symbol": "airport"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.916015625,
+          40.78054143186033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#ff8000",
+        "marker-size": "medium",
+        "marker-symbol": "airport"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.52734374999999,
+          29.611670115197377
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.439453125,
+            29.99300228455108
+          ],
+          [
+            -74.35546875,
+            40.713955826286046
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -88.41796875,
+              17.727758609852284
+            ],
+            [
+              -77.255859375,
+              18.396230138028827
+            ],
+            [
+              -76.552734375,
+              26.03704188651584
+            ],
+            [
+              -90.3515625,
+              29.152161283318915
+            ],
+            [
+              -88.41796875,
+              17.727758609852284
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7734375,
+            40.51379915504413
+          ],
+          [
+            -73.65234375,
+            30.44867367928756
+          ],
+          [
+            -76.201171875,
+            26.03704188651584
+          ]
+        ]
+      }
+    }
+  ]
+}
+
+
+
+//style for geojson polyline and polygons
+//Markers will use default
+var myStyle = {
+    "color": "#ff7800",
+    "weight": 5,
+    "opacity": 0.65,
+};
+
+
+/// custom icon///
+
+var DrinkIcon = L.Icon.extend({
+    options: {
+        shadowUrl: 'leaf-shadow.png',
+        iconSize:     [38, 45],
+        shadowSize:   [50, 64],
+        iconAnchor:   [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -76]
+    }
+});
+
+var drinkIcon = new DrinkIcon({iconUrl: 'http://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=32114101'});
+
+L.icon = function (options) {
+    return new L.Icon(options);
+};
+
+L.marker([26.03, -77.43], {icon: drinkIcon}).addTo(map).bindPopup("A celebratory drink after finishing a challenging class.");
+
+L.geoJSON(myGeoJSON, {
+    style: myStyle,
+}).addTo(map);
+
+
+
+</script>
