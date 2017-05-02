@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/qefudu/29/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Final Project Using GPX to visualize data as of 4/30">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <h1>Using GPX Data to map some routes from runkeeper</h1>
+  
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <p>
+    Every year in April I run the Delaware Coastal Half Marathon because it is my favorite run in my favorite location. This year, I had a small injury that prevented me from completing the training or the run. 
+    
+    <br><br>When you select a layer you can see some of my favorite training runs with data that I exported from runkeeper. I could not figure out how to pan so you will need to use the functions under the map<br><br> The 4/3 run is what I would call my "typical" beach run. <br><br> The run on 4/28/2015 was in Wilmington DE with a good friend and it was terrible rain so we felt quite triumphant getting through it.<br><br>The run on 4/30/2016 was in Lewes and went  by Gordon's Pond in Cape Henlopen State Park.
+  </p>
+	
+<style id="jsbin-css">
+#map {
+     width: 1000px;
+     height: 400px;
+
+}
+</style>
+</head>
+<body>
+<div id='map'></div>
+  	<br>
+	Click Here and then Select the April 28 Layer to See my Run in Delcastle (worst run ever) <a href="javascript:delcastle()">Del Castle</a><br><br>
+  
+  Click here and then Select the April 30 Layer to see a good run in Cape Henlopen State Park : Gordons Pond <a href="javascript:gordons()">Gordons Pond</a><br>
+  
+  <h2>Technical Summary</h2>
+  Click here for a summary of how I attempted this map <a href="https://jaclarke36.github.io/LA558/techRep.html">Technical Report</a><br>
+  
+<br>
+
+	<br>
+  
+  
+
+
+  <br>
+  
+<script id="jsbin-javascript">
+//var map = L.map('map').setView([38.58, -75.52], 8);
+
+
+var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+});
+
+/// layers of runs 
+
+var april3 = L.tileLayer('https://api.mapbox.com/styles/v1/jastant25/cj284xzx7000p2rqtskmtcx2o/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA', {
+    attribution: 'April 3 2015'
+});
+
+var april28 = L.tileLayer('https://api.mapbox.com/styles/v1/jastant25/cj20rlazb00222snx2hi7g3ky/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA', {
+    attribution: 'April 28 2015'
+});
+
+var april30 = L.tileLayer('https://api.mapbox.com/styles/v1/jastant25/cj20pnsx200102rpa7kdjfbl3/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA', {
+    attribution: 'April 30 2015'
+});
+  
+var noRunzone = L.tileLayer('https://api.mapbox.com/styles/v1/jastant25/cj20rikce00212snxpmlbzmwt/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA', {
+    attribution: 'noRunzone'  
+});
+
+var combined = L.tileLayer('https://api.mapbox.com/styles/v1/jastant25/cj286evfi000l2sn0k389m8e8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA', {
+    attribution: 'combined'  
+});
+
+
+
+var map = L.map('map', {
+    center: [38.828, -75.212],
+    zoom: 14,
+    layers: [osm]
+});
+
+
+var baseMaps = {
+    "Open Street Map": osm,
+	"April 3 2015":april3,
+  "April 28 2015":april28,
+  "April 30 2016":april30,
+  "No Run Zone":noRunzone,
+  "Combined":combined
+ 
+};
+
+
+var marker1 = L.marker([38.82, -75.22], {
+	draggable: true,
+	title: "hello Class1",
+	opacity: 1
+}).addTo(map);
+
+marker1.bindPopup("Dangerous Road No Run Zone").openPopup();
+
+///attempt at adding new geojson
+
+var myGeoJSON = 
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.21555662155151,
+          38.8248645165948
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.21444082260132,
+          38.82591767615482
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.21323919296265,
+          38.82728843193011
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -75.21263837814331,
+            38.82765619118441
+          ],
+          [
+            -75.21347522735596,
+            38.826486041508424
+          ],
+          [
+            -75.21471977233887,
+            38.82531587259953
+          ],
+          [
+            -75.21557807922363,
+            38.82441315772869
+          ],
+          [
+            -75.21667242050171,
+            38.82349371415057
+          ],
+          [
+            -75.21740198135376,
+            38.82280830303156
+          ],
+          [
+            -75.21793842315674,
+            38.82205601494022
+          ]
+        ]
+      }
+    }
+  ]
+}
+https://api.mapbox.com/styles/v1/jastant25/cj286evfi000l2sn0k389m8e8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdAhttps://api.mapbox.com/styles/v1/jastant25/cj286evfi000l2sn0k389m8e8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdAhttps://api.mapbox.com/styles/v1/jastant25/cj286evfi000l2sn0k389m8e8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA
+////links under the map
+
+var overlayMaps = {
+};
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+//Pan to https://api.mapbox.com/styles/v1/jastant25/cj286evfi000l2sn0k389m8e8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFzdGFudDI1IiwiYSI6ImNqMW1rNDczaDAwOXYzM3BqbDRtaHN4cXQifQ.OFWYdY61Ynd_19HBilqkdA
+function delcastle() {
+	map.panTo(new L.LatLng(39.7478, -75.6659));
+}
+
+//Pan to Lewes
+function gordons() {
+	map.panTo(new L.LatLng(38.7667, -75.0954));
+}
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
