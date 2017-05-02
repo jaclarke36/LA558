@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/bafute/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  <h1>Jennifer Stant-Clarke</h1>
+  <h2>Technical Report to go with Final Project</h2>
+
+Using GPX Data to Map Routes from Runkeeper<br><br>
+
+<p>The first thing that I did was log into Runkeeper and go to settings. From there I went to “export files” and downloaded my run. I was prepared to have to convert the files to json, but fortunately Mapbox works well with .gpx files.</p>
+
+I went to Map box and selected “Visualize my Data.” I used this to load a few runs that I remember from my this year and last year. Using my favorite area in the world as a map, I did a run map through Cape Henlopen State Park, Broadkill Beach and Wilmington Delaware.<br><br>
+
+
+Things that went wrong but helped me learn.<br><br>
+
+I spent a lot of time creating some maps in geojson.io. One in particular was a map of a road that is considered dangerous for runners, bikers and pedestrians. I was going to put a red line down this road indicating that it was not safe. I added the geojson code to my text editor and then saved the file. After several attempts to save the files correctly by overriding the “.txt”, I found no success. Therefore, I decided to use the geojson as a variation in the javascrip “var = myGeojson.”<br><br>
+
+I could not figure out how to get the maps to pan to the location of the run. My original plan was that you would select any date and it would take you to that run. I created a work around where you could “Pan” to the area where I knew the route was using the “Pan To” link under my map. Once you click that you have to then select the layer. “Pan to Delcastle” uses a function that automatically pans to the defined latitude and longitude. I did the same thing with a “Pan to” that goes to Gordons Pond.<br><br>
+
+I started to realize that I am doing something fundamentally wrong with Mapbox. Next I went back to Map box and realized that I was putting the same file on top of the same layer using “existing style” which is the default. This is why I could not change the polygon fill to a line. I realized that I needed to select the file and then select “New Style.”<br><br>
+
+After this I started to look for reasons why it was not panning and I went back to an email from the instructor indicating that my definition was over multiple lines. I was not sure what was meant by that but I had a definition and a link for each route date. <br><br>
+
+I went back to mapbox and figured out that I could add layers to one map and create one link. I thought this might solve the problem.<br><br>
+
+I uploaded a run from 4/25 and named the layer “Delcastle Run.” Instead of publishing this and adding it to my JSBin map I clicked the “Data” icon in mapbox and made an attempt at another layer.<br><br>
+
+In this attempt I figured out that I could put multiple layers of data onto one map instead of creating a link for each route.<br><br>
+
+Using this I put several runs on one style and added this to my Jsbin under the category “combined.”
+
+
+</body>
+</html>
