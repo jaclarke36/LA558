@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by jaclarke36 (http://jsbin.com/qefudu/19/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Assignment 25">
+  	
+<link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
+
+<script src="https://js.arcgis.com/3.20/"></script>
+  
+</head>
+<body>
+<div id="map"></div>
+<script id="jsbin-javascript">
+require(["esri/map", "dojo/domReady!"], function(Map) {
+  var map = new Map("map", {
+    center: [-75.2, 38.5],
+    zoom: 3,
+    basemap: "topo"
+  });
+});
+
+
+
+require(["esri/geometry/Point"], function(Point) { /* code goes here */ });
+
+
+
+
+</script>
+</body>
+</html>
